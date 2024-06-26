@@ -1,6 +1,6 @@
 # Join-Accumulate Machine (Jam) in Rust
 
-This project provides a simple implementation of the Join-Accumulate Machine (Jam) in Rust, based on the concepts described in the graypaper. The implementation includes basic structures for smart contracts, core-time management, and an execution environment.
+This project provides an implementation of the Join-Accumulate Machine (Jam) in Rust, based on the concepts described in the graypaper. The implementation includes basic structures for smart contracts, core-time management, and an execution environment.
 
 ## Overview
 
@@ -10,7 +10,6 @@ The Join-Accumulate Machine (Jam) is a virtual machine designed to execute smart
 
 - **Smart Contract Structure**: Defines basic smart contract structure with code and state.
 - **Core-Time Management**: Manages core-time allocation for contract execution.
-- **Asynchronous Execution**: Uses `tokio` for asynchronous execution of smart contracts.
 
 
 ## Getting Started
@@ -33,4 +32,10 @@ The Join-Accumulate Machine (Jam) is a virtual machine designed to execute smart
     ```bash
     cargo run
     ```
+
+ 3. **Test the application:**
+
+ ```bash
+ cargo test
+ ```
 
