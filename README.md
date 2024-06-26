@@ -12,16 +12,6 @@ The Join-Accumulate Machine (Jam) is a virtual machine designed to execute smart
 - **Core-Time Management**: Manages core-time allocation for contract execution.
 - **Asynchronous Execution**: Uses `tokio` for asynchronous execution of smart contracts.
 
-## Dependencies
-
-Ensure you have the following dependencies in your `Cargo.toml`:
-
-```toml
-[dependencies]
-serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0"
-tokio = { version = "1.0", features = ["full"] }
-```
 
 ## Getting Started
 
