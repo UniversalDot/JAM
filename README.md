@@ -35,7 +35,7 @@ The Join-Accumulate Machine (Jam) is a virtual machine designed to execute smart
 
  3. **Test the application:**
 
- ```bash
- cargo test
- ```
+    ```bash
+    cargo test
+    ```
 
