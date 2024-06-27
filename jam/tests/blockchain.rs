@@ -1,17 +1,22 @@
 #[cfg(test)]
 mod tests {
-    use jam::blockchain::Blockchain;
+    use super::*;
     use jam::transaction::Transaction;
+    use jam::blockchain::Blockchain;
+    // use serde_json::json;
 
     #[test]
     fn test_create_genesis_block() {
-        let mut blockchain = Blockchain::new(2);
+        let blockchain = Blockchain::new(2);
         assert_eq!(blockchain.chain.len(), 1);
-        assert_eq!(blockchain.chain[0].index, 0);
-        assert_eq!(blockchain.chain[0].transactions.len(), 1);
-        assert_eq!(blockchain.chain[0].transactions[0].sender, "system");
-        assert_eq!(blockchain.chain[0].transactions[0].receiver, "genesis");
-        assert_eq!(blockchain.chain[0].transactions[0].amount, 0.0);
+        let genesis_block = &blockchain.chain[0];
+        assert_eq!(genesis_block.index, 0);
+        assert_eq!(genesis_block.transactions.len(), 1);
+        assert_eq!(genesis_block.transactions[0].sender, "system");
+        assert_eq!(genesis_block.transactions[0].receiver, "genesis");
+        assert_eq!(genesis_block.transactions[0].amount, 0.0);
+        assert_eq!(genesis_block.block_producer, "genesis_producer");
+        assert_eq!(genesis_block.metadata["description"], "Genesis block");
     }
 
     #[test]
@@ -20,7 +25,6 @@ mod tests {
         let transaction = Transaction::new("Alice".to_string(), "Bob".to_string(), 10.0, 1);
         blockchain.add_transaction(transaction.clone());
         assert_eq!(blockchain.pending_transactions.len(), 1);
-        // TODO fix
         // assert_eq!(blockchain.pending_transactions[0], transaction);
     }
 
@@ -32,6 +36,9 @@ mod tests {
         assert_eq!(blockchain.chain.len(), 2);
         assert_eq!(blockchain.pending_transactions.len(), 1);
         assert_eq!(blockchain.pending_transactions[0].receiver, "Miner1");
+        let new_block = &blockchain.chain[1];
+        assert_eq!(new_block.block_producer, "Miner1");
+        assert!(new_block.metadata["timestamp"].is_string());
     }
 
     #[test]

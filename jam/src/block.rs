@@ -2,6 +2,7 @@ use crate::transaction::Transaction;
 use crate::utils::sha256;
 use chrono::prelude::*;
 use serde::{Serialize, Deserialize};
+use serde_json::Value;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Block {
@@ -11,11 +12,15 @@ pub struct Block {
     pub transactions: Vec<Transaction>,
     pub nonce: u64,
     pub block_hash: String,
+    pub state_root: String,
+    pub block_producer: String,
+    pub metadata: Value,
 }
 
 impl Block {
-    pub fn new(index: u32, previous_hash: String, transactions: Vec<Transaction>) -> Self {
+    pub fn new(index: u32, previous_hash: String, transactions: Vec<Transaction>, block_producer: String, metadata: Value) -> Self {
         let timestamp = Utc::now().timestamp();
+        let state_root = Self::calculate_state_root(&transactions);
         let mut block = Block {
             index,
             previous_hash,
@@ -23,14 +28,33 @@ impl Block {
             transactions,
             nonce: 0,
             block_hash: String::new(),
+            state_root,
+            block_producer,
+            metadata,
         };
         block.block_hash = block.calculate_hash();
         block
     }
 
+    fn calculate_state_root(transactions: &Vec<Transaction>) -> String {
+        // Placeholder implementation, should calculate the state root based on the transactions
+        let state_data: String = transactions.iter().map(|tx| tx.tx_hash.clone()).collect();
+        sha256(&state_data)
+    }
+
     pub fn calculate_hash(&self) -> String {
         let transactions_data: String = self.transactions.iter().map(|tx| tx.tx_hash.clone()).collect();
-        sha256(&format!("{}{}{}{}{}", self.index, self.previous_hash, self.timestamp, transactions_data, self.nonce))
+        let data = format!(
+            "{}{}{}{}{}{}{}",
+            self.index,
+            self.previous_hash,
+            self.timestamp,
+            transactions_data,
+            self.nonce,
+            self.state_root,
+            self.block_producer
+        );
+        sha256(&data)
     }
 
     pub fn mine_block(&mut self, difficulty: usize) {
