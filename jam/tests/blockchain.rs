@@ -5,9 +5,13 @@ mod tests {
 
     #[test]
     fn test_create_genesis_block() {
-        let blockchain = Blockchain::new(2);
+        let mut blockchain = Blockchain::new(2);
         assert_eq!(blockchain.chain.len(), 1);
         assert_eq!(blockchain.chain[0].index, 0);
+        assert_eq!(blockchain.chain[0].transactions.len(), 1);
+        assert_eq!(blockchain.chain[0].transactions[0].sender, "system");
+        assert_eq!(blockchain.chain[0].transactions[0].receiver, "genesis");
+        assert_eq!(blockchain.chain[0].transactions[0].amount, 0.0);
     }
 
     #[test]

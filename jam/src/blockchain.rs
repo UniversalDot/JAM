@@ -19,7 +19,8 @@ impl Blockchain {
     }
 
     fn create_genesis_block(&mut self) {
-        let genesis_block = Block::new(0, "0".to_string(), Vec::new());
+        let genesis_transaction = Transaction::new("system".to_string(), "genesis".to_string(), 0.0, 0);
+        let genesis_block = Block::new(0, "0".to_string(), vec![genesis_transaction]);
         self.chain.push(genesis_block);
     }
 
