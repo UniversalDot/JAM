@@ -21,11 +21,6 @@ jobs:
       with:
         toolchain: stable
         override: true
-
-    - name: Navigate to project folder and Build
-      run: |
-          cd jam/src
-          cargo build --verbose
   
     - name: Navigate to project folder and Run tests
       run: |
