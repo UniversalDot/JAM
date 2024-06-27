@@ -1,4 +1,4 @@
-# Join-Accumulate Machine (Jam) in Rust
+# Join-Accumulate Machine (JAM) in Rust
 
 [![Build](https://github.com/UniversalDot/JAM/actions/workflows/build.yml/badge.svg)](https://github.com/UniversalDot/JAM/actions/workflows/build.yml)
 [![Tests](https://github.com/UniversalDot/JAM/actions/workflows/tests.yml/badge.svg)](https://github.com/UniversalDot/JAM/actions/workflows/tests.yml)
