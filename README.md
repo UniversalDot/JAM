@@ -3,6 +3,8 @@
 [![Build](https://github.com/UniversalDot/JAM/actions/workflows/build.yml/badge.svg)](https://github.com/UniversalDot/JAM/actions/workflows/build.yml)
 [![Tests](https://github.com/UniversalDot/JAM/actions/workflows/tests.yml/badge.svg)](https://github.com/UniversalDot/JAM/actions/workflows/tests.yml)
 
+![JAM Logo](docs/images/Jam.png)
+
 
 This project provides an implementation of the Join-Accumulate Machine (Jam) in Rust, based on the concepts described in the graypaper. The implementation includes basic structures for smart contracts, core-time management, and an execution environment.
 
