@@ -1,5 +1,8 @@
 # Join-Accumulate Machine (Jam) in Rust
 
+[![CI](https://github.com/UniversalDot/JAM/actions/workflows/ci.yml/badge.svg)](https://github.com/UniversalDot/JAM/actions/workflows/ci.yml)
+
+
 This project provides an implementation of the Join-Accumulate Machine (Jam) in Rust, based on the concepts described in the graypaper. The implementation includes basic structures for smart contracts, core-time management, and an execution environment.
 
 ## Overview
