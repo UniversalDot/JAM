@@ -20,7 +20,7 @@ fn main() {
     blockchain.add_transaction(Transaction::new("Bob".to_string(), "Alice".to_string(), 5.0, 1));
     blockchain.mine_pending_transactions("Miner2".to_string());
 
-    println!("Initial Blockchain: {:?}", blockchain.chain);
+    println!("Initial Blockchain: {:?}\n", blockchain.chain);
     println!("Is blockchain valid? {}", blockchain.is_chain_valid());
 
     // Deploy a smart contract
@@ -55,6 +55,6 @@ async fn start_block_production(blockchain: std::sync::Arc<tokio::sync::Mutex<Bl
         interval.tick().await;
         let mut blockchain = blockchain.lock().await;
         blockchain.mine_pending_transactions("AutoMiner".to_string());
-        println!("New Block Mined: {:?}", blockchain.get_latest_block());
+        println!("New Block Mined: {:?}\n", blockchain.get_latest_block());
     }
 }
