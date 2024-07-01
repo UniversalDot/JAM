@@ -68,6 +68,9 @@ impl Blockchain {
             if current_block.previous_hash != previous_block.block_hash {
                 return false;
             }
+            if current_block.state_root != calculate_state_root(current_block.transactions.clone()) {
+                return false;
+            }
         }
         true
     }
