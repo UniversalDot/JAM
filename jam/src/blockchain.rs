@@ -1,20 +1,21 @@
 use crate::block::Block;
 use crate::transaction::Transaction;
 use serde_json::json;
-use chrono::Utc;
 
 pub struct Blockchain {
     pub chain: Vec<Block>,
     pub pending_transactions: Vec<Transaction>,
     pub difficulty: usize,
+    pub block_reward: f64,
 }
 
 impl Blockchain {
-    pub fn new(difficulty: usize) -> Self {
+    pub fn new(difficulty: usize, block_reward: f64) -> Self {
         let mut blockchain = Blockchain {
             chain: Vec::new(),
             pending_transactions: Vec::new(),
             difficulty,
+            block_reward,
         };
         blockchain.create_genesis_block();
         blockchain
@@ -24,7 +25,7 @@ impl Blockchain {
         let genesis_transaction = Transaction::new("system".to_string(), "genesis".to_string(), 0.0, 0);
         let metadata = json!({
             "description": "Genesis block",
-            "timestamp": Utc::now().to_rfc3339(),
+            "timestamp": chrono::Utc::now().to_rfc3339(),
         });
         let genesis_block = Block::new(0, "0".to_string(), vec![genesis_transaction], "genesis_producer".to_string(), metadata);
         self.chain.push(genesis_block);
@@ -42,7 +43,7 @@ impl Blockchain {
         let latest_block = self.get_latest_block();
         let metadata = json!({
             "miner": miner_address.clone(),
-            "timestamp": Utc::now().to_rfc3339(),
+            "timestamp": chrono::Utc::now().to_rfc3339(),
         });
         let mut new_block = Block::new(
             latest_block.index + 1,
@@ -53,7 +54,7 @@ impl Blockchain {
         );
         new_block.mine_block(self.difficulty);
         self.chain.push(new_block);
-        self.pending_transactions = vec![Transaction::new("system".to_string(), miner_address, 1.0, 0)];
+        self.pending_transactions = vec![Transaction::new("system".to_string(), miner_address, self.block_reward, 0)];
     }
 
     pub fn is_chain_valid(&self) -> bool {
@@ -68,6 +69,7 @@ impl Blockchain {
             if current_block.previous_hash != previous_block.block_hash {
                 return false;
             }
+
         }
         true
     }

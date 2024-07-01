@@ -13,9 +13,9 @@ use serde_json::json;
 use tokio::time::{self, Duration};
 
 fn main() {
-    let config = Config::new(6); // Set block production interval to 6 seconds
+    let config = Config::new(6, 2, 50.0, "genesis_producer".to_string()); // Set configurations
 
-    let mut blockchain = Blockchain::new(2);
+    let mut blockchain = Blockchain::new(config.difficulty, config.block_reward);
 
     // Add initial transactions
     blockchain.add_transaction(Transaction::new("Alice".to_string(), "Bob".to_string(), 10.0, 1));
