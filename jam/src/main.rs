@@ -3,14 +3,18 @@ mod blockchain;
 mod smart_contract;
 mod transaction;
 mod utils;
+mod config;
 
 use crate::blockchain::Blockchain;
 use crate::transaction::Transaction;
 use crate::smart_contract::SmartContract;
+use crate::config::Config;
 use serde_json::json;
 use tokio::time::{self, Duration};
 
 fn main() {
+    let config = Config::new(6); // Set block production interval to 6 seconds
+
     let mut blockchain = Blockchain::new(2);
 
     // Add initial transactions
@@ -39,7 +43,8 @@ fn main() {
     // Create a runtime and spawn the block production task
     let runtime = tokio::runtime::Runtime::new().unwrap();
     let blockchain = std::sync::Arc::new(tokio::sync::Mutex::new(blockchain));
-    runtime.spawn(start_block_production(blockchain.clone()));
+    let interval = config.block_production_interval;
+    runtime.spawn(start_block_production(blockchain.clone(), interval));
 
     // Keep the main function alive
     runtime.block_on(async {
@@ -49,8 +54,8 @@ fn main() {
     });
 }
 
-async fn start_block_production(blockchain: std::sync::Arc<tokio::sync::Mutex<Blockchain>>) {
-    let mut interval = time::interval(Duration::from_secs(6));
+async fn start_block_production(blockchain: std::sync::Arc<tokio::sync::Mutex<Blockchain>>, interval: u64) {
+    let mut interval = time::interval(Duration::from_secs(interval));
     loop {
         interval.tick().await;
         let mut blockchain = blockchain.lock().await;
