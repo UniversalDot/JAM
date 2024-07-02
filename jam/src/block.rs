@@ -36,7 +36,7 @@ impl Block {
         block
     }
 
-    fn calculate_state_root(transactions: &Vec<Transaction>) -> String {
+    fn calculate_state_root(transactions: &[Transaction]) -> String {
         // Placeholder implementation, should calculate the state root based on the transactions
         let state_data: String = transactions.iter().map(|tx| tx.tx_hash.clone()).collect();
         sha256(&state_data)
