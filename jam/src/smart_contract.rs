@@ -12,7 +12,7 @@ pub struct SmartContract {
 
 impl SmartContract {
     pub fn new(code: String, state: serde_json::Value) -> Self {
-        let address = sha256(&format!("{}{}", code, state.to_string()));
+        let address = sha256(&format!("{}{}", code, state));
         SmartContract { code, state, address }
     }
 
