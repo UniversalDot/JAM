@@ -10,7 +10,7 @@ mod tests {
 
     #[tokio::test]
     async fn test_automatic_block_creation() {
-        let blockchain = Arc::new(Mutex::new(Blockchain::new(2)));
+        let blockchain = Arc::new(Mutex::new(Blockchain::new(2, 50.0)));
 
         // Start block production
         let blockchain_clone = blockchain.clone();

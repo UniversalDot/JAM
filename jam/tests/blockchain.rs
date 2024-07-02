@@ -7,7 +7,7 @@ mod tests {
 
     #[test]
     fn test_create_genesis_block() {
-        let blockchain = Blockchain::new(2);
+        let blockchain = Blockchain::new(2, 50.0);
         assert_eq!(blockchain.chain.len(), 1);
         let genesis_block = &blockchain.chain[0];
         assert_eq!(genesis_block.index, 0);
@@ -21,7 +21,7 @@ mod tests {
 
     #[test]
     fn test_add_transaction() {
-        let mut blockchain = Blockchain::new(2);
+        let mut blockchain = Blockchain::new(2, 50.0);
         let transaction = Transaction::new("Alice".to_string(), "Bob".to_string(), 10.0, 1);
         blockchain.add_transaction(transaction.clone());
         assert_eq!(blockchain.pending_transactions.len(), 1);
@@ -30,7 +30,7 @@ mod tests {
 
     #[test]
     fn test_mine_pending_transactions() {
-        let mut blockchain = Blockchain::new(2);
+        let mut blockchain = Blockchain::new(2, 50.0);
         blockchain.add_transaction(Transaction::new("Alice".to_string(), "Bob".to_string(), 10.0, 1));
         blockchain.mine_pending_transactions("Miner1".to_string());
         assert_eq!(blockchain.chain.len(), 2);
@@ -43,7 +43,7 @@ mod tests {
 
     #[test]
     fn test_is_chain_valid() {
-        let mut blockchain = Blockchain::new(2);
+        let mut blockchain = Blockchain::new(2, 50.0);
         blockchain.add_transaction(Transaction::new("Alice".to_string(), "Bob".to_string(), 10.0, 1));
         blockchain.mine_pending_transactions("Miner1".to_string());
         assert!(blockchain.is_chain_valid());
