@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use super::*;
+    
     use jam::transaction::Transaction;
     use jam::blockchain::Blockchain;
     // use serde_json::json;
