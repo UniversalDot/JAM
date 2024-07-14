@@ -33,7 +33,7 @@ The Join-Accumulate Machine (Jam) is a virtual machine designed to execute smart
     cd JAM
     ```
 
-2. Build the project**:
+2. **Build the project:**:
     
     ```sh
     cargo build
