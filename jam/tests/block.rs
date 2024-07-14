@@ -1,6 +1,6 @@
 #[cfg(test)]
 mod tests {
-    use super::*;
+    
     use jam::transaction::Transaction;
     use jam::block::Block;
     use jam::blockchain::Blockchain;
