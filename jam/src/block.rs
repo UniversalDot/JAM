@@ -3,6 +3,8 @@ use crate::utils::sha256;
 use chrono::prelude::*;
 use serde::{Serialize, Deserialize};
 use serde_json::Value;
+use std::fmt;
+use std::error::Error;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Block {
@@ -16,6 +18,25 @@ pub struct Block {
     pub block_producer: String,
     pub metadata: Value,
 }
+
+#[derive(Debug)]
+pub enum BlockError {
+    InvalidMerkleRoot,
+    InvalidBlockHash,
+    InvalidStateRoot,
+}
+
+impl fmt::Display for BlockError {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            BlockError::InvalidMerkleRoot => write!(f, "Invalid Merkle Root"),
+            BlockError::InvalidBlockHash => write!(f, "Invalid Block Hash"),
+            BlockError::InvalidStateRoot => write!(f, "Invalid State Root"),
+        }
+    }
+}
+
+impl Error for BlockError {}
 
 impl Block {
     pub fn new(index: u32, previous_hash: String, transactions: Vec<Transaction>, block_producer: String, metadata: Value) -> Self {
@@ -63,5 +84,17 @@ impl Block {
             self.nonce += 1;
             self.block_hash = self.calculate_hash();
         }
+    }
+
+    pub fn validate_block(&self) -> Result<(), BlockError> {
+        if !self.verify_merkle_root() {
+            return Err(BlockError::InvalidMerkleRoot);
+        }
+        Ok(())
+    }
+
+    fn verify_merkle_root(&self) -> bool {
+        // Placeholder for actual Merkle root verification logic
+        true
     }
 }
